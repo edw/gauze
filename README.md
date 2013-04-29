@@ -1,6 +1,6 @@
 # Gauze
 
-A thin, dreamy, sheer layer between Clojure and SQL.
+A dreamy, sheer layer between Clojure and SQL.
 
 ## Usage
 
