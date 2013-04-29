@@ -1,0 +1,11 @@
+*~
+*#
+.DS_Store
+*.bbprojectd
+pom.xml
+*jar
+/lib/
+classes/
+/target/
+.lein-deps-sum
+.#*
