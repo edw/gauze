@@ -61,7 +61,7 @@
   [q & args]
   (let [[ds query] (if (vector? q) q [*current-datasource* q])]
     (with-open [conn (.getConnection ds)]
-      (let [stmt (.prepareStatement conn q)
+      (let [stmt (.prepareStatement conn query)
             rs (.executeQuery (set-statement-arguments! stmt args))
             column-names (result-column-names rs)
             current-row
@@ -85,7 +85,22 @@
       (get-in coll key)
       (get coll key))))
 
+(defn update
+  "Returns the number of rows updated, inserted, or deleted given zero or more
+   positional arguments. Statement can either be a string or a vector pair
+   containing a datasource and a statement."
+  [s & args]
+  (let [[ds query] (if (vector? s) s [*current-datasource* s])]
+    (with-open [conn (.getConnection ds)]
+      (let [stmt (.prepareStatement conn query)]
+        (.executeUpdate (set-statement-arguments! stmt args))))))
+
 (defn keyed-query
   "Like query, but takes a map from which keys are picked."
   [q map & ks]
   (apply query q (pick map ks)))
+
+(defn keyed-update
+  "Like update, but takes a map from which keys are picked."
+  [s map & ks]
+  (apply update s (pick map ks)))
