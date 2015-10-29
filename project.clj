@@ -1,4 +1,4 @@
-(defproject org.clojars.edw/gauze "0.1.1"
+(defproject org.clojars.edw/gauze "0.2.0"
   :description "A simple library for doing SQL"
   :url "http://github.com/edw/gauze"
   :license {:name "Eclipse Public License"
