@@ -82,7 +82,9 @@
             current-row
             (fn []
               (into {}
-                    (map (fn [[i name]] [(keyword name) (.getObject rs i)])
+                    (map (fn [[i name]]
+                           [(keyword name)                             
+                            (parse-object (.getObject rs i))])
                          column-names)))]
         (loop [row-available? (.next rs) rows []]
           (if row-available?
