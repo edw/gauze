@@ -54,6 +54,13 @@
               args))
   stmt)
 
+(defn- parse-object
+  "Logic for jdbc interop"
+  [object]
+  (cond 
+   (isJDBC4Array? object) (JDBC4Array-to-vector object)
+   :else object))
+
 (defn query
   "Returns a sequence of rows for a query given zero or more positional
   arguments. Query can be either a query string or a vector pair
