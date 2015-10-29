@@ -54,6 +54,21 @@
               args))
   stmt)
 
+(defn- isJDBC4Array?
+  [object]
+  (instance? org.postgresql.jdbc4.Jdbc4Array object))
+
+(defn- JDBC4Array-to-vector
+  [object]
+  (vec (.getArray object)))
+
+(defn- parse-object
+  "Logic for jdbc interop"
+  [object]
+  (cond 
+   (isJDBC4Array? object) (JDBC4Array-to-vector object)
+   :else object))
+
 (defn query
   "Returns a sequence of rows for a query given zero or more positional
   arguments. Query can be either a query string or a vector pair
@@ -67,7 +82,9 @@
             current-row
             (fn []
               (into {}
-                    (map (fn [[i name]] [(keyword name) (.getObject rs i)])
+                    (map (fn [[i name]]
+                           [(keyword name)                             
+                            (parse-object (.getObject rs i))])
                          column-names)))]
         (loop [row-available? (.next rs) rows []]
           (if row-available?
