@@ -58,6 +58,10 @@
   [object]
   (instance? org.postgresql.jdbc4.Jdbc4Array object))
 
+(defn- JDBC4Array-to-vector
+  [object]
+  (vec (.getArray object)))
+
 (defn- parse-object
   "Logic for jdbc interop"
   [object]
