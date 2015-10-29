@@ -54,6 +54,10 @@
               args))
   stmt)
 
+(defn- isJDBC4Array?
+  [object]
+  (instance? org.postgresql.jdbc4.Jdbc4Array object))
+
 (defn- parse-object
   "Logic for jdbc interop"
   [object]
